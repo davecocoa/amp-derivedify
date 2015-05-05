@@ -19,10 +19,8 @@ var Person = AmpersandState.extend({
 ```
 
 ```js
-var not = function(bool){
-  return !bool;
-};
-var derivedNot = derivedify(combineNames);
+var not = function(bool){ return !bool; };
+var derivedNot = derivedify(not);
 
 var Person = AmpersandState.extend({
     props: {
