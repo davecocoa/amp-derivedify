@@ -33,7 +33,7 @@ var not = function(bool){ return !bool; };
   }
 ```
 
-I have attempted to find a similarly defined function on npm without success, which is strange. At any rate, this doesn't seem much better. However, what about if I write a new `not` function, one designed for derived properties instead of of boolean literals?
+I have attempted to find a similarly defined function on npm without success, which is strange. At any rate, this doesn't seem much better. However, what about if I write a new `derivedNot` function, one designed for derived properties instead of boolean literals?
 
 ```js
 var derivedNot = function(propName){
