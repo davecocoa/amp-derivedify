@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "lodash.isobject": "^3.0.1",
-    "lodash.isstring": "^3.0.1"
+    "lodash.isstring": "^3.0.1",
+    "lodash.toarray": "^3.0.1",
+    "lodash.constant": "^3.0.0"
   }
 }
