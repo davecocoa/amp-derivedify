@@ -3,6 +3,10 @@ var isObject = require('lodash.isobject');
 var toArray = require('lodash.toarray');
 var constant = require('lodash.constant');
 
+function get(obj, str){
+  return str.split('.').reduce(function(obj, prop){ return obj && obj[prop]; }, obj);
+}
+
 module.exports = function(func){
   return function(){
     var derivedObj = { deps: [] };
@@ -16,7 +20,7 @@ module.exports = function(func){
     derivedObj.fn = function(){
       var realArgs = args.map(function(arg){
         // string property name, literal or other derived obj
-        if(isString(arg)) { return this[arg]; }
+        if(isString(arg)) { return get(this, arg); }
         if(isObject(arg)) { return arg.fn.apply(this); }
         return arg;
       }.bind(this));

@@ -29,22 +29,32 @@ tape("single dep", function(t){
 tape("dep on another object", function(t){
   var identity = function(a){ return a; };
   var dIdentity = derivedify(identity);
-  var testClass = AmpersandState.extend({
+
+  var Child = AmpersandState.extend({
     props: {
-      otherObj: 'object',
-    },
-    derived: {
-      propAlias: dIdentity('otherObj.niceProp')
+      name: 'string'
     }
   });
 
-  var testObj = new testClass({ otherObj: { niceProp: 'exciting' } });
+  var Parent = AmpersandState.extend({
+    props: {
+      name: 'string'
+    },
+    children: {
+      child: Child
+    },
+    derived: {
+      childName: dIdentity('child.name')
+    }
+  });
 
-  t.equal(testObj.propAlias, 'exciting');
+  var testObj = new Parent({ child: { name: 'Alexandra' } });
 
-  testObj.otherObj.niceProp = 'invigorating';
+  t.equal(testObj.childName, 'Alexandra');
 
-  t.equal(testObj.propAlias, 'invigorating');
+  testObj.child.name = 'Alex';
+
+  t.equal(testObj.childName, 'Alex');
 
   t.end();
 });
