@@ -7,7 +7,7 @@ tape("single dep", function(t){
   var dIdentity = derivedify(identity);
   var testClass = AmpersandState.extend({
     props: {
-        someProp: 'string',
+      someProp: 'string',
     },
     derived: {
       propAlias: dIdentity('someProp')
@@ -18,6 +18,71 @@ tape("single dep", function(t){
 
   t.equal(testObj.propAlias, 'working');
 
+  testObj.someProp = 'a new string';
+
+  t.equal(testObj.propAlias, 'a new string');
+
   t.end();
 });
 
+tape("string literals", function(t){
+  var contains = function(str, searchstr){ return str.indexOf(searchstr) !== -1; };
+  var dContains = derivedify(contains);
+  
+  var testClass = AmpersandState.extend({
+    props: {
+      lastMessage: 'string',
+    },
+    derived: {
+      havingFun: dContains('lastMessage', derivedify.l('fun'))
+    }
+  });
+
+  var testObj = new testClass({ lastMessage: 'Lots of fun in the park today!' });
+
+  t.ok(testObj.havingFun);
+
+  testObj.lastMessage = "Ugh! I can't do anything right today!";
+
+  t.notOk(testObj.havingFun);
+
+  t.end()
+});
+
+tape("nested deps", function(t){
+  var boolAnd = function(a,b){ return a && b };
+  var boolOr = function(a,b){ return a || b };
+  var dAnd = derivedify(boolAnd);
+  var dOr = derivedify(boolOr);
+
+  var testClass = AmpersandState.extend({
+    props: {
+      apples: 'boolean',
+      oranges: 'boolean',
+      pears: 'boolean'
+    },
+    derived: {
+      delicious: dAnd('apples', dOr('oranges', 'pears'))
+    }
+  });
+
+  var testObj = new testClass({ apples: false, oranges: false, pears: false });
+
+  t.equal(testObj.delicious, false);
+  testObj.pears = true;
+  t.equal(testObj.delicious, false);
+  testObj.pears = false; testObj.oranges = true;
+  t.equal(testObj.delicious, false);
+  testObj.pears = true;
+  t.equal(testObj.delicious, false);
+  testObj.pears = false; testObj.oranges = false; testObj.apples = true;
+  t.equal(testObj.delicious, false);
+  testObj.pears = true;
+  t.equal(testObj.delicious, true);
+  testObj.pears = false;testObj.oranges = true;
+  t.equal(testObj.delicious, true);
+  testObj.pears = true;
+  t.equal(testObj.delicious, true);
+
+  t.end()
+});
