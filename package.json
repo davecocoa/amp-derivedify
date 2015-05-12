@@ -1,6 +1,6 @@
 {
   "name": "amp-derivedify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple util for making derived property helpers",
   "main": "index.js",
   "scripts": {
