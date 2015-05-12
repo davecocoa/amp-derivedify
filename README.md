@@ -1,5 +1,5 @@
 # amp-derivedify
-Simple util for making derived property helpers. This is fairly meta, so we'll start simple.
+Simple util for making derived property helpers. This is fairly meta, so we'll start simple. If you just want to dive into examples, the tests are a good place to start.
 
 [ampersand-state](https://github.com/AmpersandJS/ampersand-state) allows you to define derived properties like so:
 
