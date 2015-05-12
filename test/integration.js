@@ -25,6 +25,30 @@ tape("single dep", function(t){
   t.end();
 });
 
+
+tape("dep on another object", function(t){
+  var identity = function(a){ return a; };
+  var dIdentity = derivedify(identity);
+  var testClass = AmpersandState.extend({
+    props: {
+      otherObj: 'object',
+    },
+    derived: {
+      propAlias: dIdentity('otherObj.niceProp')
+    }
+  });
+
+  var testObj = new testClass({ otherObj: { niceProp: 'exciting' } });
+
+  t.equal(testObj.propAlias, 'exciting');
+
+  testObj.otherObj.niceProp = 'invigorating';
+
+  t.equal(testObj.propAlias, 'invigorating');
+
+  t.end();
+});
+
 tape("string literals", function(t){
   var contains = function(str, searchstr){ return str.indexOf(searchstr) !== -1; };
   var dContains = derivedify(contains);

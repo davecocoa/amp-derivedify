@@ -8,7 +8,19 @@ tape("single dep", function(t){
 
   t.deepEqual(derivedProp.deps, ['propName']);
 
-  t.equal(derivedProp.fn.apply({propName: 'working'}), 'working');
+  t.equal(derivedProp.fn.apply({ propName: 'working' }), 'working');
+
+  t.end();
+});
+
+tape("dep on another object", function(t){
+  var identity = function(a){ return a; };
+  var dIdentity = derivedify(identity);
+  var derivedProp = dIdentity('otherObj.niceProp');
+
+  t.deepEqual(derivedProp.deps, ['otherObj.niceProp']);
+
+  t.equal(derivedProp.fn.apply({ otherObj: { niceProp: 'exciting' } }), 'exciting');
 
   t.end();
 });
