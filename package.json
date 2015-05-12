@@ -1,13 +1,19 @@
 {
   "name": "amp-derivedify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple util for making derived property helpers",
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js"
   },
   "author": "David McMullin",
+  "repository": "davecocoa/amp-derivedify",
   "license": "ISC",
+  "keywords": [
+    "ampersand",
+    "derived",
+    "derivedify"
+  ],
   "devDependencies": {
     "ampersand-state": "^4.5.4",
     "tape": "^4.0.0"
